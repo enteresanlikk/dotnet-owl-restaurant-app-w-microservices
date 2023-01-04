@@ -1,0 +1,14 @@
+﻿@{
+    int startYear = 2022;
+    int nowYear = DateTime.Today.Year;
+
+    string year = nowYear > startYear ? $"{startYear}-{nowYear}" : $"{startYear}";
+}
+
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="container">
+        <p class="mb-0 text-muted text-center">
+            © @Html.Raw(year) &sdot; OWL Restaurant
+        </p>
+    </div>
+</footer>

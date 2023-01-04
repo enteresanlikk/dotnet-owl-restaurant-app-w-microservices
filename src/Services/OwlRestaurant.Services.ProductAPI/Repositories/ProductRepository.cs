@@ -30,7 +30,7 @@ public class ProductRepository : IProductRepository
             }
             else
             {
-                _context.Products.Add(_product);
+                _context.Products.Update(_product);
             }
             await _context.SaveChangesAsync();
 
@@ -64,14 +64,14 @@ public class ProductRepository : IProductRepository
 
     public async Task<ProductDTO> GetProductById(Guid productId)
     {
-        Product product = await _context.Products.Where(p => p.Id == productId).FirstOrDefaultAsync();
+        Product product = await _context.Products.AsNoTracking().Where(p => p.Id == productId).FirstOrDefaultAsync();
 
         return _mapper.Map<ProductDTO>(product);
     }
 
     public async Task<IEnumerable<ProductDTO>> GetProducts()
     {
-        List<Product> products = await _context.Products.ToListAsync();
+        List<Product> products = await _context.Products.AsNoTracking().ToListAsync();
 
         return _mapper.Map<IEnumerable<ProductDTO>>(products);
     }
