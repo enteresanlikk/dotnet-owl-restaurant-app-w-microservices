@@ -1,16 +1,7 @@
 ﻿<header class="border-bottom">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
-            <button class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbar"
-                    aria-controls="navbar"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar">
+            <div class="navbar-collapse d-flex justify-content-between">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">
@@ -23,6 +14,8 @@
                         </a>
                     </li>
                 </ul>
+
+                <partial name="_LoginMenu" />
             </div>
         </div>
     </nav>

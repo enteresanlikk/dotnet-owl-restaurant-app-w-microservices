@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OwlRestaurant.Services.ProductAPI.Abstractions.Repositories;
 using OwlRestaurant.Services.ProductAPI.DTOs;
@@ -62,6 +63,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Customer")]
     public async Task<IActionResult> Add([FromBody] ProductDTO productDTO)
     {
         var response = new ResponseDTO();
@@ -84,6 +86,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin,Customer")]
     public async Task<IActionResult> Update([FromBody] ProductDTO productDTO)
     {
         var response = new ResponseDTO();
@@ -106,6 +109,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Admin")]
     [Route("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {

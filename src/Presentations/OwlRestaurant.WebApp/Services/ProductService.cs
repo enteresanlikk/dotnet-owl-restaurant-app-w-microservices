@@ -8,10 +8,12 @@ namespace OwlRestaurant.WebApp.Services;
 public class ProductService : BaseService, IProductService
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ProductService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+    public ProductService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor) : base(httpClientFactory, httpContextAccessor)
     {
         _httpClientFactory = httpClientFactory;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<T> CreateProductAsync<T>(ProductDTO productDTO)

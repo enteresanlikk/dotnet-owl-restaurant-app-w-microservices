@@ -52,11 +52,10 @@ namespace OwlRestaurant.WebApp.Controllers
         public async Task<IActionResult> Update(Guid id)
         {
             var response = await _productService.GetProductByIdAsync<ResponseDTO>(id);
-
-            ProductDTO data = new();
+            
             if (response is not null && response.Success)
             {
-                data = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Data));
+                var data = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Data));
 
                 return View(data);
             }
@@ -85,10 +84,9 @@ namespace OwlRestaurant.WebApp.Controllers
         {
             var response = await _productService.GetProductByIdAsync<ResponseDTO>(id);
 
-            ProductDTO data = new();
             if (response is not null && response.Success)
             {
-                data = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Data));
+                var data = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Data));
 
                 return View(data);
             }
