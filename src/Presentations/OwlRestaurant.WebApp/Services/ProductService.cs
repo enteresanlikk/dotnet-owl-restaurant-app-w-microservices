@@ -5,24 +5,22 @@ using static OwlRestaurant.WebApp.SD;
 
 namespace OwlRestaurant.WebApp.Services;
 
-public class ProductService : BaseService, IProductService
+public class ProductService : IProductService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IBaseService _baseService;
     private readonly IConfiguration _configuration;
     private readonly string _apiBaseUrl;
 
-    public ProductService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, IConfiguration configuration) : base(httpClientFactory, httpContextAccessor)
+    public ProductService(IBaseService baseService, IConfiguration configuration)
     {
-        _httpClientFactory = httpClientFactory;
-        _httpContextAccessor = httpContextAccessor;
+        _baseService = baseService;
         _configuration = configuration;
         _apiBaseUrl = _configuration["ServiceURLs:ProductAPI"];
     }
 
     public async Task<T> CreateProductAsync<T>(ProductDTO productDTO)
     {
-        return await SendAsync<T>(new APIRequest()
+        return await _baseService.SendAsync<T>(new APIRequest()
         {
             Url = $"{_apiBaseUrl}/api/products",
             RequestType = RequestType.POST,
@@ -32,7 +30,7 @@ public class ProductService : BaseService, IProductService
 
     public async Task<T> DeleteProductAsync<T>(Guid id)
     {
-        return await SendAsync<T>(new APIRequest()
+        return await _baseService.SendAsync<T>(new APIRequest()
         {
             Url = $"{_apiBaseUrl}/api/products/{id}",
             RequestType = RequestType.DELETE
@@ -41,7 +39,7 @@ public class ProductService : BaseService, IProductService
 
     public async Task<T> GetProductByIdAsync<T>(Guid id)
     {
-        return await SendAsync<T>(new APIRequest()
+        return await _baseService.SendAsync<T>(new APIRequest()
         {
             Url = $"{_apiBaseUrl}/api/products/{id}",
             RequestType = RequestType.GET
@@ -50,7 +48,7 @@ public class ProductService : BaseService, IProductService
 
     public async Task<T> GetAllProductsAsync<T>()
     {
-        return await SendAsync<T>(new APIRequest()
+        return await _baseService.SendAsync<T>(new APIRequest()
         {
             Url = $"{_apiBaseUrl}/api/products",
             RequestType = RequestType.GET
@@ -59,7 +57,7 @@ public class ProductService : BaseService, IProductService
 
     public async Task<T> UpdateProductAsync<T>(ProductDTO productDTO)
     {
-        return await SendAsync<T>(new APIRequest()
+        return await _baseService.SendAsync<T>(new APIRequest()
         {
             Url = $"{_apiBaseUrl}/api/products",
             RequestType = RequestType.PUT,
