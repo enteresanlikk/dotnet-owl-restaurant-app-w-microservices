@@ -7,7 +7,6 @@ using OwlRestaurant.WebApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<IProductService, ProductService>();
-SD.ProductAPIBase = builder.Configuration["ServiceURLs:ProductAPI"];
 
 builder.Services.AddScoped<IProductService, ProductService>();
 

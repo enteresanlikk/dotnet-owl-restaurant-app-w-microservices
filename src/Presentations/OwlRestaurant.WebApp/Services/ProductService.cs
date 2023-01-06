@@ -9,18 +9,22 @@ public class ProductService : BaseService, IProductService
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IConfiguration _configuration;
+    private readonly string _apiBaseUrl;
 
-    public ProductService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor) : base(httpClientFactory, httpContextAccessor)
+    public ProductService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, IConfiguration configuration) : base(httpClientFactory, httpContextAccessor)
     {
         _httpClientFactory = httpClientFactory;
         _httpContextAccessor = httpContextAccessor;
+        _configuration = configuration;
+        _apiBaseUrl = _configuration["ServiceURLs:ProductAPI"];
     }
 
     public async Task<T> CreateProductAsync<T>(ProductDTO productDTO)
     {
         return await SendAsync<T>(new APIRequest()
         {
-            Url = $"{SD.ProductAPIBase}/api/products",
+            Url = $"{_apiBaseUrl}/api/products",
             RequestType = RequestType.POST,
             Data = productDTO
         });
@@ -30,7 +34,7 @@ public class ProductService : BaseService, IProductService
     {
         return await SendAsync<T>(new APIRequest()
         {
-            Url = $"{SD.ProductAPIBase}/api/products/{id}",
+            Url = $"{_apiBaseUrl}/api/products/{id}",
             RequestType = RequestType.DELETE
         });
     }
@@ -39,7 +43,7 @@ public class ProductService : BaseService, IProductService
     {
         return await SendAsync<T>(new APIRequest()
         {
-            Url = $"{SD.ProductAPIBase}/api/products/{id}",
+            Url = $"{_apiBaseUrl}/api/products/{id}",
             RequestType = RequestType.GET
         });
     }
@@ -48,7 +52,7 @@ public class ProductService : BaseService, IProductService
     {
         return await SendAsync<T>(new APIRequest()
         {
-            Url = $"{SD.ProductAPIBase}/api/products",
+            Url = $"{_apiBaseUrl}/api/products",
             RequestType = RequestType.GET
         });
     }
@@ -57,7 +61,7 @@ public class ProductService : BaseService, IProductService
     {
         return await SendAsync<T>(new APIRequest()
         {
-            Url = $"{SD.ProductAPIBase}/api/products",
+            Url = $"{_apiBaseUrl}/api/products",
             RequestType = RequestType.PUT,
             Data = productDTO
         });
