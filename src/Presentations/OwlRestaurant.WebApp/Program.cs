@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using OwlRestaurant.WebApp;
@@ -7,9 +8,11 @@ using OwlRestaurant.WebApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<IProductService, ProductService>();
+builder.Services.AddHttpClient<ICartService, CartService>();
 
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddControllersWithViews();
 
@@ -28,6 +31,10 @@ builder.Services.AddAuthentication(options =>
     c.ClientId = "owl";
     c.ClientSecret = "testsecretchangethissecret";
     c.ResponseType = "code";
+
+    c.ClaimActions.MapJsonKey("role", "role", "role");
+    c.ClaimActions.MapJsonKey("sub", "sub", "sub");
+
     c.TokenValidationParameters.NameClaimType = "name";
     c.TokenValidationParameters.RoleClaimType = "role";
     c.Scope.Add("owl");

@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.WebApp", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.Services.ProductAPI", "src\Services\OwlRestaurant.Services.ProductAPI\OwlRestaurant.Services.ProductAPI.csproj", "{1C3A1BBD-739D-4474-A30D-6FB727F01299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlRestaurant.Services.Identity", "src\Services\OwlRestaurant.Services.Identity\OwlRestaurant.Services.Identity.csproj", "{9E7872F8-733E-4733-A5E1-BE77496CC69C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.Services.Identity", "src\Services\OwlRestaurant.Services.Identity\OwlRestaurant.Services.Identity.csproj", "{9E7872F8-733E-4733-A5E1-BE77496CC69C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlRestaurant.Services.ShoppingCartAPI", "src\Services\OwlRestaurant.Services.ShoppingCartAPI\OwlRestaurant.Services.ShoppingCartAPI.csproj", "{78A69F26-E043-46B4-9571-F117D286DC1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9E7872F8-733E-4733-A5E1-BE77496CC69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E7872F8-733E-4733-A5E1-BE77496CC69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E7872F8-733E-4733-A5E1-BE77496CC69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A69F26-E043-46B4-9571-F117D286DC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A69F26-E043-46B4-9571-F117D286DC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A69F26-E043-46B4-9571-F117D286DC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A69F26-E043-46B4-9571-F117D286DC1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{53CCB96A-54CE-49AC-8BD4-D0CE68321E01} = {A7F8EC36-4C25-4C9D-A453-9566F738B8E6}
 		{1C3A1BBD-739D-4474-A30D-6FB727F01299} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
 		{9E7872F8-733E-4733-A5E1-BE77496CC69C} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
+		{78A69F26-E043-46B4-9571-F117D286DC1B} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA1ED93-A4D4-4C3A-84B1-902D51A11D4A}
