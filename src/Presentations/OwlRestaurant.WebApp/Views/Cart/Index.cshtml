@@ -70,9 +70,9 @@
                     }
                     <div class="row">
                         <div class="col-6">
+                            <span>Coupon: </span>
                             @if (string.IsNullOrEmpty(Model.CartHeader.CouponCode))
                             {
-                                <span>Coupon:</span>
                                 <input asp-for="CartHeader.CouponCode" />
                                 <button type="submit" asp-action="ApplyCoupon" class="btn-success">
                                     Apply
@@ -80,7 +80,6 @@
                             }
                             else
                             {
-                                <span>Coupon:</span>
                                 <input asp-for="CartHeader.CouponCode" disabled />
                                 <button type="submit" asp-action="RemoveCoupon" class="btn-danger">
                                     Remove
@@ -88,10 +87,16 @@
                             }
 
                         </div>
-                        <div class="col-6 text-right">
+                        <div class="col-6 d-flex flex-column text-right">
                             <span class="text-danger">
                                 Order Total : @string.Format("{0:c}", Model.CartHeader.OrderTotal)
                             </span>
+                            @if (Model.CartHeader.DiscountTotal > 0)
+                            {
+                                <span class="text-success">
+                                    Order Discount : @string.Format("{0:c}", Model.CartHeader.DiscountTotal)
+                                </span>
+                            }
                         </div>
                     </div>
                     <div class="card-footer row">

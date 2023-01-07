@@ -9,6 +9,7 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
 {
     [Route("api/carts")]
     [ApiController]
+    [Authorize]
     public class CartsController : ControllerBase
     {
         private readonly ICartRepository _cartRepository;
@@ -41,7 +42,6 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin,Customer")]
         public async Task<IActionResult> Add([FromBody] CartDTO cartDTO)
         {
             var response = new ResponseDTO();
@@ -64,7 +64,6 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin,Customer")]
         public async Task<IActionResult> Update([FromBody] CartDTO cartDTO)
         {
             var response = new ResponseDTO();
@@ -87,7 +86,6 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Admin")]
         [Route("{cartId:guid}")]
         public async Task<IActionResult> Delete(Guid cartId)
         {
@@ -96,6 +94,50 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
             try
             {
                 var status = await _cartRepository.RemoveFromCartAsync(cartId);
+
+                response.Success = status;
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return NotFound(response);
+        }
+
+        [HttpPost]
+        [Route("apply-coupon")]
+        public async Task<IActionResult> ApplyCoupon([FromBody] CartDTO cartDTO)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                var status = await _cartRepository.ApplyCoupon(cartDTO.CartHeader.UserId, cartDTO.CartHeader.CouponCode);
+
+                response.Success = status;
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return NotFound(response);
+        }
+
+        [HttpDelete]
+        [Route("remove-coupon")]
+        public async Task<IActionResult> RemoveCoupon([FromBody] Guid userId)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                var status = await _cartRepository.RemoveCoupon(userId);
 
                 response.Success = status;
 

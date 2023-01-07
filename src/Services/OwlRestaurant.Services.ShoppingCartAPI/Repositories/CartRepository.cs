@@ -17,6 +17,22 @@ public class CartRepository : ICartRepository
         _context = context;
         _mapper = mapper;
     }
+    
+    public async Task<bool> ApplyCoupon(Guid userId, string couponCode)
+    {
+        var cart = await _context.CartHeaders.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+        if (cart is null)
+        {
+            return false;
+        }
+
+        cart.CouponCode = couponCode;
+
+        _context.CartHeaders.Update(cart);
+
+        return await _context.SaveChangesAsync() > 0;
+    }
 
     public async Task<bool> ClearCartByUserIdAsync(Guid userId)
     {
@@ -37,7 +53,7 @@ public class CartRepository : ICartRepository
     {
         Cart cart = _mapper.Map<Cart>(cartDTO);
 
-        var hasProduct = _context.Products.AsNoTracking().Where(p => p.Id == cart.CartDetails.FirstOrDefault().Id).FirstOrDefault();
+        var hasProduct = _context.Products.AsNoTracking().Where(p => p.Id == cart.CartDetails.FirstOrDefault().ProductId).FirstOrDefault();
         if (hasProduct is null)
         {
             _context.Products.Add(cart.CartDetails.FirstOrDefault().Product);
@@ -94,6 +110,22 @@ public class CartRepository : ICartRepository
             return _mapper.Map<CartDTO>(cart);
         }
         return null;
+    }
+    
+    public async Task<bool> RemoveCoupon(Guid userId)
+    {
+        var cart = await _context.CartHeaders.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+        if (cart is null)
+        {
+            return false;
+        }
+
+        cart.CouponCode = null;
+
+        _context.CartHeaders.Update(cart);
+
+        return await _context.SaveChangesAsync() > 0;
     }
 
     public async Task<bool> RemoveFromCartAsync(Guid cartDetailId)

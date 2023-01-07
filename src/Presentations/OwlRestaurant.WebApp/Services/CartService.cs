@@ -18,6 +18,16 @@ public class CartService : ICartService
         _apiBaseUrl = _configuration["ServiceURLs:ShoppingCartAPI"];
     }
 
+    public async Task<T> ApplyCoupon<T>(CartDTO cartDTO)
+    {
+        return await _baseService.SendAsync<T>(new APIRequest()
+        {
+            Url = $"{_apiBaseUrl}/api/carts/apply-coupon",
+            RequestType = RequestType.POST,
+            Data = cartDTO
+        });
+    }
+
     public async Task<T> CreateCartAsync<T>(CartDTO cartDTO)
     {
         return await _baseService.SendAsync<T>(new APIRequest()
@@ -43,6 +53,16 @@ public class CartService : ICartService
         {
             Url = $"{_apiBaseUrl}/api/carts/{userId}",
             RequestType = RequestType.GET
+        });
+    }
+
+    public async Task<T> RemoveCoupon<T>(Guid userId)
+    {
+        return await _baseService.SendAsync<T>(new APIRequest()
+        {
+            Url = $"{_apiBaseUrl}/api/carts/remove-coupon",
+            RequestType = RequestType.DELETE,
+            Data = userId
         });
     }
 
