@@ -30,6 +30,29 @@ public class CartController : Controller
         return View(data);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Checkout(CartDTO cartDTO)
+    {
+        try
+        {
+            var response = await _cartService.Checkout<ResponseDTO>(cartDTO.CartHeader);
+            if (response is not null && response.Success)
+            {
+                return RedirectToAction(nameof(CheckoutConfirmation));
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+        return View(cartDTO);
+    }
+
+    public async Task<IActionResult> CheckoutConfirmation()
+    {
+        return View();
+    }
+
     public async Task<IActionResult> Remove(Guid id)
     {
         Guid userId = Guid.Parse(User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value ?? Guid.Empty.ToString());

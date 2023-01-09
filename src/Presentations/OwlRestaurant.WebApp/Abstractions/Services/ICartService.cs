@@ -10,4 +10,5 @@ public interface ICartService
     Task<T> DeleteFromCartAsync<T>(Guid cardId);
     Task<T> ApplyCoupon<T>(CartDTO cartDTO);
     Task<T> RemoveCoupon<T>(Guid userId);
+    Task<T> Checkout<T>(CartHeaderDTO cartHeaderDTO);
 }

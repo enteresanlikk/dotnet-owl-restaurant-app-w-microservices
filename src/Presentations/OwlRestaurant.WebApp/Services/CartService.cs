@@ -27,6 +27,16 @@ public class CartService : ICartService
             Data = cartDTO
         });
     }
+    
+    public async Task<T> Checkout<T>(CartHeaderDTO cartHeaderDTO)
+    {
+        return await _baseService.SendAsync<T>(new APIRequest()
+        {
+            Url = $"{_apiBaseUrl}/api/carts/checkout",
+            RequestType = RequestType.POST,
+            Data = cartHeaderDTO
+        });
+    }
 
     public async Task<T> CreateCartAsync<T>(CartDTO cartDTO)
     {

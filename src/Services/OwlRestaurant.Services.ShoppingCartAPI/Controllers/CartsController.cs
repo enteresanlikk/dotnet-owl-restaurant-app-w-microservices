@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OwlRestaurant.Integration.MessageBus;
 using OwlRestaurant.Services.ShoppingCartAPI.Abstractions.Repositories;
 using OwlRestaurant.Services.ShoppingCartAPI.DTOs;
+using OwlRestaurant.Services.ShoppingCartAPI.Messages;
 using System.Data;
 
 namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
@@ -13,10 +15,12 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
     public class CartsController : ControllerBase
     {
         private readonly ICartRepository _cartRepository;
+        private readonly IMessageBus _messageBus;
 
-        public CartsController(ICartRepository cartRepository)
+        public CartsController(ICartRepository cartRepository, IMessageBus messageBus)
         {
             _cartRepository = cartRepository;
+            _messageBus = messageBus;
         }
 
         [HttpGet]
@@ -140,6 +144,36 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
                 var status = await _cartRepository.RemoveCoupon(userId);
 
                 response.Success = status;
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return NotFound(response);
+        }
+
+        [HttpPost]
+        [Route("checkout")]
+        public async Task<IActionResult> Checkout(CheckoutHeaderDTO checkoutHeaderDTO)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                CartDTO cartDTO = await _cartRepository.GetCartByUserIdAsync(checkoutHeaderDTO.UserId);
+                if (cartDTO is null)
+                {
+                    return BadRequest();
+                }
+                checkoutHeaderDTO.CartDetails = cartDTO.CartDetails;
+                // TODO send the message service
+
+                await _messageBus.Publish(checkoutHeaderDTO, "checkoutmessagetopic");
+
+                response.Success = true;
 
                 return Ok(response);
             }

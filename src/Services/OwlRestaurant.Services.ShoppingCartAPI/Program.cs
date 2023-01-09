@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OwlRestaurant.Integration.MessageBus;
 using OwlRestaurant.Services.ShoppingCartAPI.Abstractions.Repositories;
 using OwlRestaurant.Services.ShoppingCartAPI.DBContexts;
 using OwlRestaurant.Services.ShoppingCartAPI.Repositories;
@@ -64,6 +65,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddSingleton<IMessageBus>(m => new AzureServiceMessageBus(builder.Configuration.GetConnectionString("ServiceBus")));
 
 var app = builder.Build();
 
