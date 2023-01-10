@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OwlRestaurant.Integration.MessageBus;
-using OwlRestaurant.Services.ShoppingCartAPI.Abstractions.Repositories;
-using OwlRestaurant.Services.ShoppingCartAPI.DBContexts;
-using OwlRestaurant.Services.ShoppingCartAPI.Repositories;
+using OwlRestaurant.Services.OrderAPI.Abstractions.Messaging;
+using OwlRestaurant.Services.OrderAPI.Abstractions.Repositories;
+using OwlRestaurant.Services.OrderAPI.DBContexts;
+using OwlRestaurant.Services.OrderAPI.Extensions;
+using OwlRestaurant.Services.OrderAPI.Messaging;
+using OwlRestaurant.Services.OrderAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +35,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "OwlRestaurant.Services.ShoppingCartAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "OwlRestaurant.Services.OrderAPI", Version = "v1" });
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
@@ -62,17 +66,14 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MSSQLConnection")));
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("MSSQLConnection"));
 
+builder.Services.AddSingleton(new OrderRepository(optionBuilder.Options));
+builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 builder.Services.AddSingleton<IMessageBus>(m => new AzureServiceMessageBus(builder.Configuration["ServiceBus:ConnectionString"]));
-
-builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(o =>
-{
-    o.BaseAddress = new Uri(builder.Configuration["ServiceURLs:CouponAPI"]);
-});
 
 var app = builder.Build();
 
@@ -89,5 +90,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseAzureServiceBusConsumer();
 
 app.Run();

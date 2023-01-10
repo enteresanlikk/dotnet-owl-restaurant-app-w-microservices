@@ -37,7 +37,7 @@ public class CartRepository : ICartRepository
     public async Task<bool> ClearCartByUserIdAsync(Guid userId)
     {
         var cartHeaderItem = _context.CartHeaders.Where(c => c.UserId == userId).FirstOrDefault();
-        if (cartHeaderItem is null)
+        if (cartHeaderItem is not null)
         {
             var cartDetails = _context.CartDetails.Where(c => c.CartHeaderId == cartHeaderItem.Id);
             _context.CartDetails.RemoveRange(cartDetails);
@@ -86,7 +86,10 @@ public class CartRepository : ICartRepository
             }
             else
             {
+                cart.CartDetails.FirstOrDefault().Product = null;
                 cart.CartDetails.FirstOrDefault().Count += cartDetail.Count;
+                cart.CartDetails.FirstOrDefault().Id = cartDetail.Id;
+                cart.CartDetails.FirstOrDefault().CartHeaderId = cartDetail.CartHeaderId;
                 _context.CartDetails.Update(cart.CartDetails.FirstOrDefault());
 
                 await _context.SaveChangesAsync();

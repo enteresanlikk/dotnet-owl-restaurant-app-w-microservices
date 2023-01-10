@@ -86,6 +86,13 @@
                                 </button>
                             }
 
+                            @if (!string.IsNullOrEmpty(Model.CartHeader.CouponCode) && Model.CartHeader.DiscountTotal == 0)
+                            {
+                                <span class="row">
+                                    Coupon code is not valid!
+                                </span>
+                            }
+
                         </div>
                         <div class="col-6 d-flex flex-column text-right">
                             <span class="text-danger">

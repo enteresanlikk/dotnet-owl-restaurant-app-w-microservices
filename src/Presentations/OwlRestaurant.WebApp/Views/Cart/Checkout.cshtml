@@ -1,16 +1,18 @@
 ﻿@model CartDTO
 @{
     ViewData["Title"] = "Checkout - Cart";
+
+    string errorMessage = TempData["Error"] as string;
 }
 
 @section MetaTags {
     <link href="~/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 }
 
-@if (TempData["Error"] != null)
+@if (!string.IsNullOrEmpty(errorMessage))
 {
     <div class="alert alert-warning" role="alert">
-        @TempData["Error"]
+        @Html.Raw(errorMessage)
     </div>
 }
 

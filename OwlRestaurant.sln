@@ -21,7 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.Services.Coup
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{2FDC2C45-B241-4D74-9D5B-1312CDF6743F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlRestaurant.Integration.MessageBus", "src\Integrations\OwlRestaurant.Integration.MessageBus\OwlRestaurant.Integration.MessageBus.csproj", "{C72DE1F0-CBD0-4793-B1DE-44E79A4DF540}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.Integration.MessageBus", "src\Integrations\OwlRestaurant.Integration.MessageBus\OwlRestaurant.Integration.MessageBus.csproj", "{C72DE1F0-CBD0-4793-B1DE-44E79A4DF540}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.Services.OrderAPI", "src\Services\OwlRestaurant.Services.OrderAPI\OwlRestaurant.Services.OrderAPI.csproj", "{0CA176BA-25E2-4143-BCA6-791E84CED200}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{21621264-1775-41D2-BED6-788138CFBE03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentProcessor", "src\Payments\PaymentProcessor\PaymentProcessor.csproj", "{9D02806C-7C25-451E-A1B9-A620BDDF31ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlRestaurant.Services.PaymentAPI", "src\Services\OwlRestaurant.Services.PaymentAPI\OwlRestaurant.Services.PaymentAPI.csproj", "{91780C7E-F3EC-442A-A819-6FBBBF90DC57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +61,18 @@ Global
 		{C72DE1F0-CBD0-4793-B1DE-44E79A4DF540}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C72DE1F0-CBD0-4793-B1DE-44E79A4DF540}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C72DE1F0-CBD0-4793-B1DE-44E79A4DF540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA176BA-25E2-4143-BCA6-791E84CED200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA176BA-25E2-4143-BCA6-791E84CED200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA176BA-25E2-4143-BCA6-791E84CED200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA176BA-25E2-4143-BCA6-791E84CED200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D02806C-7C25-451E-A1B9-A620BDDF31ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D02806C-7C25-451E-A1B9-A620BDDF31ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D02806C-7C25-451E-A1B9-A620BDDF31ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D02806C-7C25-451E-A1B9-A620BDDF31ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91780C7E-F3EC-442A-A819-6FBBBF90DC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91780C7E-F3EC-442A-A819-6FBBBF90DC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91780C7E-F3EC-442A-A819-6FBBBF90DC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91780C7E-F3EC-442A-A819-6FBBBF90DC57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +87,10 @@ Global
 		{7C7F50E1-FF18-42A1-86BF-3F6DE4987605} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
 		{2FDC2C45-B241-4D74-9D5B-1312CDF6743F} = {0F3ACD0E-CADF-4A42-B3A9-7F7237AD293F}
 		{C72DE1F0-CBD0-4793-B1DE-44E79A4DF540} = {2FDC2C45-B241-4D74-9D5B-1312CDF6743F}
+		{0CA176BA-25E2-4143-BCA6-791E84CED200} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
+		{21621264-1775-41D2-BED6-788138CFBE03} = {0F3ACD0E-CADF-4A42-B3A9-7F7237AD293F}
+		{9D02806C-7C25-451E-A1B9-A620BDDF31ED} = {21621264-1775-41D2-BED6-788138CFBE03}
+		{91780C7E-F3EC-442A-A819-6FBBBF90DC57} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA1ED93-A4D4-4C3A-84B1-902D51A11D4A}

@@ -15,11 +15,13 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
     public class CartsController : ControllerBase
     {
         private readonly ICartRepository _cartRepository;
+        private readonly ICouponRepository _couponRepository;
         private readonly IMessageBus _messageBus;
 
-        public CartsController(ICartRepository cartRepository, IMessageBus messageBus)
+        public CartsController(ICartRepository cartRepository, ICouponRepository couponRepository, IMessageBus messageBus)
         {
             _cartRepository = cartRepository;
+            _couponRepository = couponRepository;
             _messageBus = messageBus;
         }
 
@@ -46,29 +48,7 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CartDTO cartDTO)
-        {
-            var response = new ResponseDTO();
-
-            try
-            {
-                var data = await _cartRepository.CreateUpdateCartAsync(cartDTO);
-
-                response.Success = true;
-                response.Data = data;
-
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                response.ErrorMessages = new List<string> { ex.ToString() };
-            }
-
-            return NotFound(response);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CartDTO cartDTO)
+        public async Task<IActionResult> CreateUpdate([FromBody] CartDTO cartDTO)
         {
             var response = new ResponseDTO();
 
@@ -169,9 +149,24 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
                     return BadRequest();
                 }
                 checkoutHeaderDTO.CartDetails = cartDTO.CartDetails;
-                // TODO send the message service
+
+                string couponCode = cartDTO.CartHeader.CouponCode;
+                if (!string.IsNullOrEmpty(couponCode))
+                {
+                    CouponDTO coupon = await _couponRepository.GetCoupon(couponCode);
+
+                    if (checkoutHeaderDTO.DiscountTotal != coupon.DiscountAmount)
+                    {
+                        response.Success = false;
+                        response.ErrorMessages = new List<string> { "Coupon is not valid" };
+                        response.Message = "Coupon is not valid";
+                        return Ok(response);
+                    }
+                }
 
                 await _messageBus.Publish(checkoutHeaderDTO, "checkoutmessagetopic");
+
+                await _cartRepository.ClearCartByUserIdAsync(checkoutHeaderDTO.UserId);
 
                 response.Success = true;
 
