@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OwlRestaurant.Services.Paym
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlRestaurant.Services.EmailAPI", "src\Services\OwlRestaurant.Services.EmailAPI\OwlRestaurant.Services.EmailAPI.csproj", "{9D6DDADA-F9E7-43B6-8527-24E0B2A62F0A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{51851A38-071D-4980-AB91-43170AD00154}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlRestaurant.Gateway.APIGateway", "src\Gateways\OwlRestaurant.Gateway.APIGateway\OwlRestaurant.Gateway.APIGateway.csproj", "{7DEFE9F5-C8C3-4C8A-AABB-B3F5B49BBAF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +83,10 @@ Global
 		{9D6DDADA-F9E7-43B6-8527-24E0B2A62F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D6DDADA-F9E7-43B6-8527-24E0B2A62F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D6DDADA-F9E7-43B6-8527-24E0B2A62F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DEFE9F5-C8C3-4C8A-AABB-B3F5B49BBAF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DEFE9F5-C8C3-4C8A-AABB-B3F5B49BBAF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DEFE9F5-C8C3-4C8A-AABB-B3F5B49BBAF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DEFE9F5-C8C3-4C8A-AABB-B3F5B49BBAF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +106,8 @@ Global
 		{9D02806C-7C25-451E-A1B9-A620BDDF31ED} = {21621264-1775-41D2-BED6-788138CFBE03}
 		{91780C7E-F3EC-442A-A819-6FBBBF90DC57} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
 		{9D6DDADA-F9E7-43B6-8527-24E0B2A62F0A} = {470D50A7-7F17-4A7D-8923-6F7CF6A723E0}
+		{51851A38-071D-4980-AB91-43170AD00154} = {0F3ACD0E-CADF-4A42-B3A9-7F7237AD293F}
+		{7DEFE9F5-C8C3-4C8A-AABB-B3F5B49BBAF0} = {51851A38-071D-4980-AB91-43170AD00154}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA1ED93-A4D4-4C3A-84B1-902D51A11D4A}
