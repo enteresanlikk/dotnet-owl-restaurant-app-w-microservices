@@ -1,4 +1,4 @@
-﻿namespace OwlRestaurant.Services.OrderAPI.Messages;
+﻿namespace OwlRestaurant.Services.EmailAPI.Messages;
 
 public class UpdatePaymentResultMessage
 {

@@ -8,16 +8,16 @@ namespace OwlRestaurant.Services.OrderAPI.Repositories;
 
 public class OrderRepository : IOrderRepository
 {
-    private readonly DbContextOptions<ApplicationDbContext> _dbContext;
+    private readonly DbContextOptions<ApplicationDbContext> _context;
 
     public OrderRepository(DbContextOptions<ApplicationDbContext> dbContext)
     {
-        _dbContext = dbContext;
+        _context = dbContext;
     }
 
     public async Task<bool> AddOrder(OrderHeader orderHeader)
     {
-        await using var _db = new ApplicationDbContext(_dbContext);
+        await using var _db = new ApplicationDbContext(_context);
         _db.OrderHeaders.Add(orderHeader);
         await _db.SaveChangesAsync();
         return true;
@@ -25,7 +25,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task UpdateOrderPaymentStatus(Guid orderHeaderId, bool paid)
     {
-        await using var _db = new ApplicationDbContext(_dbContext);
+        await using var _db = new ApplicationDbContext(_context);
         var orderHeaderFromDb = await _db.OrderHeaders.FirstOrDefaultAsync(u => u.Id == orderHeaderId);
         if (orderHeaderFromDb is not null)
         {

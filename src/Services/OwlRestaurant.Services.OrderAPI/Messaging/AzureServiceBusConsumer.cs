@@ -42,7 +42,7 @@ public class AzureServiceBusConsumer : IAzureServiceBusConsumer
 
         var client = new ServiceBusClient(_connectionString);
 
-        _checkoutProcessor = client.CreateProcessor(_checkoutMesageTopic, _checkoutSubscriptionName);
+        _checkoutProcessor = client.CreateProcessor(_checkoutMesageTopic);
         _orderUpdatePaymentStatusProcessor = client.CreateProcessor(_orderUpdatePaymentResultTopic, _checkoutSubscriptionName);
     }
 
@@ -63,7 +63,7 @@ public class AzureServiceBusConsumer : IAzureServiceBusConsumer
     {
         await _checkoutProcessor.StopProcessingAsync();
         await _checkoutProcessor.DisposeAsync();
-        
+
         await _orderUpdatePaymentStatusProcessor.StopProcessingAsync();
         await _orderUpdatePaymentStatusProcessor.DisposeAsync();
     }
@@ -118,7 +118,8 @@ public class AzureServiceBusConsumer : IAzureServiceBusConsumer
             CardNumber = orderHeader.CardNumber,
             CVV = orderHeader.CVV,
             ExpiryMonthYear = orderHeader.ExpiryMonthYear,
-            OrderTotal = orderHeader.OrderTotal
+            OrderTotal = orderHeader.OrderTotal,
+            Email = orderHeader.Email
         };
 
         try
@@ -148,7 +149,7 @@ public class AzureServiceBusConsumer : IAzureServiceBusConsumer
     private Task ErrorHandler(ProcessErrorEventArgs args)
     {
         Console.WriteLine(args.Exception.ToString());
-        
+
         return Task.CompletedTask;
     }
 }

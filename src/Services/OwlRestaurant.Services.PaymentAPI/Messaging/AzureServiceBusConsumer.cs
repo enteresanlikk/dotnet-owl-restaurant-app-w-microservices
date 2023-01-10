@@ -69,6 +69,7 @@ public class AzureServiceBusConsumer : IAzureServiceBusConsumer
         UpdatePaymentResultMessage updatePaymentResultMessage = new()
         {
             OrderId = paymentRequestMessage.OrderId,
+            Email = paymentRequestMessage.Email,
             Status = result
         };
 

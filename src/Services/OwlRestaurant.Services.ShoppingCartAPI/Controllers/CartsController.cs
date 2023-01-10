@@ -17,12 +17,14 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
         private readonly ICartRepository _cartRepository;
         private readonly ICouponRepository _couponRepository;
         private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
 
-        public CartsController(ICartRepository cartRepository, ICouponRepository couponRepository, IMessageBus messageBus)
+        public CartsController(ICartRepository cartRepository, ICouponRepository couponRepository, IMessageBus messageBus, IConfiguration configuration)
         {
             _cartRepository = cartRepository;
             _couponRepository = couponRepository;
             _messageBus = messageBus;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -164,7 +166,7 @@ namespace OwlRestaurant.Services.ShoppingCartAPI.Controllers
                     }
                 }
 
-                await _messageBus.Publish(checkoutHeaderDTO, "checkoutmessagetopic");
+                await _messageBus.Publish(checkoutHeaderDTO, _configuration["ServiceBus:CheckoutQueueName"]);
 
                 await _cartRepository.ClearCartByUserIdAsync(checkoutHeaderDTO.UserId);
 
